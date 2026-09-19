@@ -11,7 +11,7 @@ class CancellationHistory
 private:
   stack <Reservation> cancelledReservations;
 public:
-  void storeCancelledReservation (Resevation reservation);
+  void storeCancelledReservation (Reservation reservation);
   bool restoreLastCancelled(Reservation& reservation);
   void displayCancellationHistory() const;
 };

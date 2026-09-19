@@ -86,6 +86,22 @@ bool ReservationManager::reservationExists(string reservationID) const
    return false;
 }
 
+bool ReservationManager::getReservation(string reservationID, Reservation& reservation) const
+{
+    Node* current = head;
+
+    while (current !=nullptr)
+    {
+        if (current->reservation.getReservationID() == reservationID)
+        {
+            reservation = current->reservation;
+            return true;
+        }
+        current = current->next;
+    }
+    return false;
+}
+
 string ReservationManager::getResourceID(string reservationID) const
 {
     Node* current = head;

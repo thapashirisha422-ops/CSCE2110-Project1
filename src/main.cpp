@@ -2,10 +2,13 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <limits>
 
 #include "Resource.h"
 #include "Reservation.h"
 #include "ReservationManager.h"
+#include "waitinglist.h"
+#include "CancellationHistory.h"
 
 using namespace std;
 
@@ -13,6 +16,8 @@ int main()
 {
     vector<Resource> resources;
     ReservationManager manager;
+    WaitingList waitingList;
+    CancellationHistory cancellationHistory;
 
     //Read resources.txt
     ifstream resourceFile("data/resources.txt");
@@ -97,11 +102,22 @@ int main()
         cout << "2. Create Reservation" << endl;
         cout << "3. Cancel Reservation" << endl;
         cout << "4. View Active Reservations" << endl;
-        cout << "5. Exit" << endl;
+        cout << "5. View Waiting List" << endl;
+        cout << "6. Process Next Waiting Student" << endl;
+        cout << "7. Undo Cancellation" << endl;
+        cout << "8. View Cancellation History" << endl;
+        cout << "9. Exit" << endl;
         cout << "Enter choice: ";
 
         cin >> choice;
 
+        if (cin.fail())
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(),'\n');
+            cout << "Invalid choice. Please enter a number from 1 to 9." << endl;
+            continue;
+        }
         if (choice ==1)
         {
             for (const Resource& resource : resources)
@@ -164,7 +180,8 @@ int main()
             }
             else if (!resourceAvailable)
             {
-                cout << "Resource is unavailable." << endl;
+                cout << "Resource is unavailable. Added to waiting list." << endl;
+                waitingList.addStudent(studentID, resourceID);
             }
             else
             {
@@ -186,12 +203,16 @@ int main()
     else if (choice == 3)
     {
         string reservationID;
+        Reservation cancelledReservation;
         
         cin.ignore();
 
         cout << "Enter Reservation ID to cancel: ";
         getline(cin, reservationID);
-        
+        if (manager.getReservation (reservationID, cancelledReservation))
+        {
+            cancellationHistory.storeCancelledReservation( cancelledReservation);
+        }
     if (manager.removeReservation(reservationID))
         {
             cout << "Reservation cancelled successfully." << endl;
@@ -207,10 +228,47 @@ int main()
     }
     else if (choice == 5)
     {
-        cout << "Exiting program." << endl;
+        waitingList.displayWaitingList();
+    }
+    else if (choice ==6)
+    {
+        waitingList.removeStudent();
+    }
+        else if (choice == 7)
+        {
+            Reservation restoredReservation;
+
+            if (cancellationHistory.restoreLastCancelled(restoredReservation))
+            {
+                if (manager.reservationExists(restoredReservation.getReservationID()))
+                {
+                    cout << "Reservation ID already exists." << endl;
+                }
+                else{
+                manager.addReservation(restoredReservation);
+            cout << "Reservation restored successfully." << endl;
+        }
+    }
+        else
+        {
+            cout << "No cancellation history to undo." << endl;
+        }
     }
 
-} while (choice != 5);   
+        else if (choice == 8)
+        {
+            cancellationHistory.displayCancellationHistory();
+        }
+        else if (choice == 9)
+        {
+            cout << "Exiting program." << endl;
+    }
+    else
+    {
+        cout << "Invalid choice.Please try again." << endl;
+    }
+
+} while (choice != 9);   
 
 return 0;
 }

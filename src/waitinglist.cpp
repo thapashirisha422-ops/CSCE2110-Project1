@@ -39,6 +39,7 @@ void WaitingList::addStudent(string studentID, string resourceID){
 //remove student from waiting list
 void WaitingList::removeStudent(){
     if(isEmpty()){
+        cout << "Waiting list is empty." << endl;
         return;
     }
     WaitNode* temp = front;

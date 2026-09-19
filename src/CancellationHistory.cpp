@@ -1,5 +1,5 @@
 #include "../include/CancellationHistory.h"
-#include <isostream>
+#include <iostream>
 
 using namespace std;
 
@@ -25,10 +25,10 @@ void CancellationHistory::displayCancellationHistory() const
     cout << "No cancellation history." << endl;
     return;
   }
- stack<Reservation> temp == cancelledReservations;
- while (!temp.empty()
+ stack<Reservation> temp = cancelledReservations;
+ while (!temp.empty())
   {  
     temp.top().display();
     temp.pop();
 }
-  
+} 
