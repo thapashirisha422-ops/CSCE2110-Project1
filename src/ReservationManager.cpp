@@ -3,12 +3,12 @@
 
 using namespace std;
 
-ReservationManager: :ReservationManager()
+ReservationManager::ReservationManager()
 {
     head = nullptr;
 }
 
-ReservationManager: :~ReservationManager()
+ReservationManager::~ReservationManager()
 {
   Node* current = head;
   
@@ -20,12 +20,12 @@ ReservationManager: :~ReservationManager()
   }
 }
 
-void ReservationManager: :addReservation(Reservation reservation)
+void ReservationManager::addReservation(Reservation reservation)
 {
     Node* newNode = new Node(reservation);
     if (head == nullptr)
     {
-        head = new Node;
+        head = newNode;
     }
 else
 {
@@ -39,7 +39,7 @@ else
  }    
 }
 
-bool ReservationManager: :removesReservation(string reservation ID)
+bool ReservationManager::removeReservation(string reservationID)
 {
     if (head ==nullptr)
     {
@@ -48,7 +48,7 @@ bool ReservationManager: :removesReservation(string reservation ID)
 
     if (head->reservation.getReservationID() == reservationID)
 {
-    Node* temp = head
+    Node* temp = head;
     head = head->next;
     delete temp;
     return true;
@@ -71,7 +71,7 @@ while (current->next !=nullptr)
     return false;
 }
 
-bool ReservationManager: :reservationExists(string reservationID) const
+bool ReservationManager::reservationExists(string reservationID) const
 {
     Node* current = head;
 
@@ -86,7 +86,22 @@ bool ReservationManager: :reservationExists(string reservationID) const
    return false;
 }
 
-void ReservationManager: :displayReservations() const
+string ReservationManager::getResourceID(string reservationID) const
+{
+    Node* current = head;
+
+    while (current != nullptr)
+    {
+        if (current->reservation.getReservationID() == reservationID)
+        {
+            return current->reservation.getResourceID();
+        }
+        current = current->next;
+    }
+    return "";
+}
+
+void ReservationManager::displayReservations() const
 {
     if (head == nullptr)
     {

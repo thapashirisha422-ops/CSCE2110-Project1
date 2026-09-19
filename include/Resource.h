@@ -7,7 +7,7 @@ using namespace std;
 class Resource
 {
     private:
-    string resourceID:
+    string resourceID;
     string resourceName;
     string resourceType;
     string availabilityStatus;
@@ -21,6 +21,8 @@ string getResourceID() const;
 string getResourceName() const;
 string getResourceType() const;
 string getAvailabilityStatus() const;
+
+void setAvailabilityStatus(string status);
 
 void display() const;
 };

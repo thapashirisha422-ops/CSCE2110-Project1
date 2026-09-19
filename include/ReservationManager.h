@@ -30,6 +30,7 @@ public:
        void addReservation(Reservation reservation);
        bool removeReservation( string reservationID);
        bool reservationExists( string reservationID) const;
+       string getResourceID(string reservationID) const;
        void displayReservations() const;
 };
 #endif
