@@ -260,7 +260,7 @@ int main()
                 else{
                 manager.addReservation(restoredReservation);
                     for(Resource& res : resources){
-                        if(res.getResourceID() == restoredReservation.getResourceID(){
+                        if(res.getResourceID() == restoredReservation.getResourceID()){
                             res.setAvailabilityStatus("Unavailable");
                             break;
                         }
