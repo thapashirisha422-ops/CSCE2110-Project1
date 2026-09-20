@@ -195,6 +195,13 @@ int main()
 
                 manager.addReservation(newReservation);
 
+                for(Resource& res : resources){
+                    if(res.getResourceID() == resourceID){
+                        res.setAvailabilityStatus("Unavailable");
+                        break;
+                    }
+                }
+
                 cout << "Reservation created successfully." << endl;
             }
         }
@@ -215,6 +222,12 @@ int main()
         }
     if (manager.removeReservation(reservationID))
         {
+            for(Resource& res : resources){
+                if(res.getResourceID() == cancelledReservation.getResourceID()){
+                    res.setAvailabilityStatus("Available");
+                    break;
+                }
+            }
             cout << "Reservation cancelled successfully." << endl;
         }
         else
@@ -246,6 +259,12 @@ int main()
                 }
                 else{
                 manager.addReservation(restoredReservation);
+                    for(Resource& res : resources){
+                        if(res.getResourceID() == restoredReservation.getResourceID(){
+                            res.setAvailabilityStatus("Unavailable");
+                            break;
+                        }
+                    }
             cout << "Reservation restored successfully." << endl;
         }
     }
