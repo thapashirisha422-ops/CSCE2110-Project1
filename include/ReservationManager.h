@@ -34,5 +34,6 @@ public:
        string getResourceID(string reservationID) const;
        void displayReservations() const;
        void displayResourceUtilization() const;
+       void displayMostRequestedResource() const;
 };
 #endif
