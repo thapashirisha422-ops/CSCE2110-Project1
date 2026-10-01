@@ -106,7 +106,9 @@ int main()
         cout << "6. Process Next Waiting Student" << endl;
         cout << "7. Undo Cancellation" << endl;
         cout << "8. View Cancellation History" << endl;
-        cout << "9. Exit" << endl;
+        cout << "9. Resource Utilization Report" << endl;
+        cout << "10. Most Requested Resource Report" << endl;
+        cout << "11. Exit" << endl;
         cout << "Enter choice: ";
 
         cin >> choice;
@@ -115,7 +117,7 @@ int main()
         {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(),'\n');
-            cout << "Invalid choice. Please enter a number from 1 to 9." << endl;
+            cout << "Invalid choice. Please enter a number from 1 to 11." << endl;
             continue;
         }
         if (choice ==1)
@@ -280,14 +282,22 @@ int main()
         }
         else if (choice == 9)
         {
-            cout << "Exiting program." << endl;
+           manager.displayResourceUtilization();
+    }
+    else if (choice == 10)
+    {
+        manager.displayMostRequestedResource();
+    }
+    else if (choice == 11)
+    {
+        cout << "Exiting program. " << endl;
     }
     else
     {
         cout << "Invalid choice.Please try again." << endl;
     }
 
-} while (choice != 9);   
+} while (choice != 11);   
 
 return 0;
 }
