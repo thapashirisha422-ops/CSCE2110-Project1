@@ -183,7 +183,7 @@ int main()
             else if (!resourceAvailable)
             {
                 cout << "Resource is unavailable. Added to waiting list." << endl;
-                waitingList.addStudent(studentID, resourceID);
+                waitingList.addStudent(reservationID,studentID,studentName,resourceID,date);
             }
             else
             {
@@ -197,8 +197,10 @@ int main()
 
                 manager.addReservation(newReservation);
 
-                for(Resource& res : resources){
-                    if(res.getResourceID() == resourceID){
+                for(Resource& res : resources)
+                {
+                    if(res.getResourceID() == resourceID)
+                    {
                         res.setAvailabilityStatus("Unavailable");
                         break;
                     }
@@ -218,25 +220,74 @@ int main()
 
         cout << "Enter Reservation ID to cancel: ";
         getline(cin, reservationID);
-        if (manager.getReservation (reservationID, cancelledReservation))
-        {
-            cancellationHistory.storeCancelledReservation( cancelledReservation);
-        }
-    if (manager.removeReservation(reservationID))
-        {
-            for(Resource& res : resources){
-                if(res.getResourceID() == cancelledReservation.getResourceID()){
-                    res.setAvailabilityStatus("Available");
-                    break;
-                }
-            }
-            cout << "Reservation cancelled successfully." << endl;
-        }
-        else
+        if (!manager.getReservation (reservationID, cancelledReservation))
         {
             cout << "Reservation not found." << endl;
         }
+        else
+        {
+            cancellationHistory.storeCancelledReservation( cancelledReservation);
+        
+            if (manager.removeReservation(reservationID))
+            {
+                string freedResourceID =
+                    cancelledReservation.getResourceID();
+                // First mark resource availabe
+                for(Resource& res : resources){
+                    if(res.getResourceID() == cancelledReservation.getResourceID())
+                    {
+                        res.setAvailabilityStatus("Available");
+                        break;
+                    }
+            }
+            cout << "Reservation cancelled successfully." << endl;
+            string waitingReservationID;
+            string waitingStudentID;
+            string waitingStudentName;
+            string waitingDate;
+            //Check for next student waiting for this resource
+            if (waitingList.getNextStudentForResource(
+                freedResourceID,
+                waitingReservationID,
+                waitingStudentID,
+                waitingStudentName,
+                waitingDate))
+            {
+                Reservation newReservation(
+                    waitingReservationID,
+                    waitingStudentID,
+                    waitingStudentName,
+                    freedResourceID,
+                    waitingDate
+                );
+                manager.addReservation(newReservation);
+                //Resource becomes unavailable again
+                for (Resource& res : resources)
+                {
+                    if (res.getResourceID() == freedResourceID)
+                    {
+                        res.setAvailabilityStatus("Unavailabe");
+                        break;
+                    }
+                }
+                cout << "Resource "
+                     <<freedResourceID
+                     << ". automatically assigned to waiting student "
+                     << waitingStudentID
+                     << "." << endl;
+        }
+        else
+        {
+            cout << "No students are waiting for resource ."
+                 << freedResourceID
+                 << ". Resource is now available." 
+                 << endl;
+        }
+    
     }
+    } 
+    }
+
     else if (choice == 4)
     {
         manager.displayReservations();
@@ -296,8 +347,9 @@ int main()
     {
         cout << "Invalid choice.Please try again." << endl;
     }
-
-} while (choice != 11);   
+ 
+    }  while (choice != 11);   
 
 return 0;
+
 }
