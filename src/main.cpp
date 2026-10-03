@@ -101,12 +101,13 @@ int main()
         cout << "1. View Resources" << endl;
         cout << "2. Create Reservation" << endl;
         cout << "3. Cancel Reservation" << endl;
-        cout << "4. View Active Reservations" << endl;
+        cout << "4. Active Reservations Report" << endl;
         cout << "5. View Waiting List" << endl;
         cout << "6. Process Next Waiting Student" << endl;
         cout << "7. Undo Cancellation" << endl;
         cout << "8. View Cancellation History" << endl;
-        cout << "9. Exit" << endl;
+        cout << "9. Search Reservation" << endl;
+        cout << "10. Exit" << endl;
         cout << "Enter choice: ";
 
         cin >> choice;
@@ -115,7 +116,7 @@ int main()
         {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(),'\n');
-            cout << "Invalid choice. Please enter a number from 1 to 9." << endl;
+            cout << "Invalid choice. Please enter a number from 1 to 10." << endl;
             continue;
         }
         if (choice ==1)
@@ -237,7 +238,7 @@ int main()
     }
     else if (choice == 4)
     {
-        manager.displayReservations();
+        manager.activeReservationReport();
     }
     else if (choice == 5)
     {
@@ -280,14 +281,28 @@ int main()
         }
         else if (choice == 9)
         {
+            string reservationID;
+
+            cin.ignore();
+
+            cout << "Enter Reservation ID to search: ";
+            getline(cin, reservationID);
+
+            if (!manager.searchReservation(reservationID))
+            {
+                cout << "Reservation not found." << endl;
+            }
+        }
+        else if (choice == 10)
+        {
             cout << "Exiting program." << endl;
-    }
+            }
     else
     {
-        cout << "Invalid choice.Please try again." << endl;
+        cout << "Invalid choice. Please try again." << endl;
     }
 
-} while (choice != 9);   
+} while (choice != 10);   
 
 return 0;
 }
