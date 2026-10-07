@@ -31,3 +31,7 @@ Compile using:
 '''bash
 g++ -std=c++17 -Iinclude src/*.cpp -o project1
 
+## Run Instructions
+'''bash
+./project1
+
