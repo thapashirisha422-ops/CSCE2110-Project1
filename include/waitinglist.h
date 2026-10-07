@@ -25,6 +25,7 @@ class WaitingList {
         void removeStudent();
         void displayWaitingList() const;
         bool isEmpty() const;
+        bool getNextStudent(string resourceID, string& studentID);
 };
 
 #endif
