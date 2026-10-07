@@ -26,6 +26,7 @@ class WaitingList {
         void displayWaitingList() const;
         bool isEmpty() const;
         bool getNextStudent(string resourceID, string& studentID);
+        bool getFrontStudent(string& studentID, string& resourceID) const;
 };
 
 #endif
