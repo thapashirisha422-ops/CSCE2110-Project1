@@ -43,7 +43,7 @@ bool isValidDate (const string& date)
 }
     if (day < 1 || day > daysInMonth[month - 1])
         return false;
-    return true
+    return true;
 }
 
 int main()
@@ -404,6 +404,7 @@ int main()
     }
 
 } while (choice != 10);   
+
 
 return 0;
 }
