@@ -187,3 +187,18 @@ void ReservationManager::activeReservationReport() const
     }
     cout << "Total Active Reservations: " << count << endl;
     }
+bool ReservationManager::hasreservationForResource(string resourceID) const
+{
+    Node* current = head;
+    //Search the linked list for another reservation
+    //associated with this resource.
+    while (current != nullptr)
+   {
+        if (current-> reservation.getResourceID() == resourceID)
+        {
+            return true;
+        }
+        current = current->next;
+    }
+    return false;
+}
