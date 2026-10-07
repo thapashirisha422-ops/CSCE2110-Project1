@@ -34,6 +34,7 @@ public:
        string getResourceID(string reservationID) const;
        void displayReservations() const;
        bool searchReservation(string reservationID) const;
+       bool hasReservationForResource(string resourceID) const;
        void activeReservationReport() const;
 };
 #endif
