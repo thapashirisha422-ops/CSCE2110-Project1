@@ -172,7 +172,7 @@ void ReservationManager::activeReservationReport() const
     }
     cout << "Total Active Reservations: " << count << endl;
     }
-bool ReservationManager::hasreservationForResource(string resourceID) const
+bool ReservationManager::hasReservationForResource(string resourceID) const
 {
     Node* current = head;
     //Search the linked list for another reservation
