@@ -77,7 +77,7 @@ bool Waitinglist::getNextStudent(string resourceID, string& studentID)
     {
         if (current->resourceID == resourceID)
         {
-            studentID = current->studentID:
+            studentID = current->studentID;
             // Removing the front node
             if (previous == nullptr)
             {
@@ -100,6 +100,20 @@ bool Waitinglist::getNextStudent(string resourceID, string& studentID)
        }
    return false;
 }
+
+int WaitingList::getWaitCountForResource(string resID) const{
+    int count = 0;
+    WaitNode* current = front;
+
+    while (current != nullptr){
+        if (current->resourceID == resID){
+            count++;
+        }
+        current = current->next;
+    }
+    return count;
+}
+
             
 
             
