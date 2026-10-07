@@ -69,7 +69,7 @@ void WaitingList::displayWaitingList() const{
 }
 //Finda and remove the first student waiting for a specific resource. 
 //Returns true if a matching student is found.
-bool Waitinglist::getNextStudent(string resourceID, string& studentID)
+bool WaitingList::getNextStudent(string resourceID, string& studentID)
 {
     WaitNode* current = front;
     WaitNode* previous = nullptr;
