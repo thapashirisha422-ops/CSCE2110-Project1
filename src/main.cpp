@@ -13,11 +13,11 @@
 
 using namespace std;
 //Validates reservation dates in YYY-MM-DD format
-bool isvalidDate (const string& date)
+bool isValidDate (const string& date)
 {
     if (date.length() != 10)
         return false;
-    if (date[4] != '-' || date[7] != '-'
+    if (date[4] != '-' || date[7] != '-')
         return false;
     for (int i = 0; i < 10; i++)
 {
@@ -41,8 +41,9 @@ bool isvalidDate (const string& date)
 {
     daysInMonth[1] = 29;
 }
-    if (day < 1 || day > daysInMonth{month - 1])
-        return true;
+    if (day < 1 || day > daysInMonth[month - 1])
+        return false;
+    return true
 }
 
 int main()
@@ -123,6 +124,7 @@ int main()
 
         manager.addReservation(reservation);
         // A resource with an active reservation should not be available.
+        for (Resource& resource : resources)
         {
             if (resource.getResourceID() == resourceID)
             {
@@ -203,7 +205,7 @@ int main()
                  {
                      cout << "Invalid date. Please use YYYY-MM-DD format." << endl;
                  }
-            } while (isValidDate(date));
+            } while (!isValidDate(date));
 
             bool resourceFound = false;
             bool resourceAvailable = false;
@@ -265,17 +267,70 @@ int main()
         getline(cin, reservationID);
         if (manager.getReservation (reservationID, cancelledReservation))
         {
-            cancellationHistory.storeCancelledReservation( cancelledReservation);
+             cancellationHistory.storeCancelledReservation( cancelledReservation);
         }
-    if (manager.removeReservation(reservationID))
+       if (manager.removeReservation(reservationID))
         {
-            for(Resource& res : resources){
-                if(res.getResourceID() == cancelledReservation.getResourceID()){
-                    res.setAvailabilityStatus("Available");
-                    break;
+            string resourceID = cancelledReservation.getResourceID();
+            //Check whether another active reservation still uses this resource.
+            bool stillReserved = manager.hasReservationForResource(resourceID);
+
+            if (stillReserved)
+            {
+                //Another reservation still exists, so the resource stays unavailable.
+                for (Resource& res : resources)
+                {
+                    if (res.getResourceID() == resourceID)
+                    {
+                            res.setAvailabilityStatus("Unavailable");
+                            break;
+                    }
                 }
             }
-            cout << "Reservation cancelled successfully." << endl;
+            else
+            {
+                string nextStudentID;
+                //Give the resource to the first student waiting for it.
+                if (waitingList.getNextStudent(resourceID, nextStudentID))
+                {
+                    //Generate an ID for the automatically created reservation.
+                    string newReservationID = "AUTO_" + nextStudentID + "_" + resourceID; 
+
+                    Reservation newReservation(
+                        newReservationID,
+                        nextStudentID,
+                        nextStudentID,
+                        resourceID,
+                        cancelledReservation.getReservationDate()
+                    );
+                    manager.addReservation(newReservation);
+                    
+                 for (Resource& res : resources)
+                 {
+                     if (res.getResourceID() == resourceID)
+                     {
+                        res.setAvailabilityStatus("Unavailable");
+                        break;
+                     }
+                 }
+                cout << "Resource " << resourceID
+                     << " automatically assigned to waiting student "
+                     << nextStudentID << "." << endl;
+            }
+            else
+            {
+                //Nobody is waiting, so the resource becomes available.
+                for (Resource& res : resources)
+                    {
+                        if (res.getResourceID() == resourceID)
+                        { 
+                            res.setAvailabilityStatus("Available");
+                            break;
+                        }
+                    }
+              }
+         }
+           cout << "Reservation cancelled successfully." << endl;
         }
         else
         {
