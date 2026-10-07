@@ -122,6 +122,13 @@ int main()
         );
 
         manager.addReservation(reservation);
+        // A resource with an active reservation should not be available.
+        {
+            if (resource.getResourceID() == resourceID)
+            {
+                resource.setAvailabilityStatus("Unavailable");
+                break;
+            }
     }
 
     reservationFile.close();
