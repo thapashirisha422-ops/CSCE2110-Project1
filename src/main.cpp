@@ -45,6 +45,32 @@ bool isValidDate (const string& date)
         return false;
     return true;
 }
+void swapResources(Resource& a, Resource& b){
+    Resource temp = a;
+    a = b;
+    b = temp;
+}
+int partition(vector<Resource>& arr, int low, int high){
+    string pivot = arr[high].getResourceName();
+    int i = low -1;
+
+    for(int j = low; j <= high - 1; j++){
+        if(arr[j].getResourceName() < pivot){
+            i++;
+            swapResources(arr[i], arr[j]);
+        }
+    }
+    swapResources(arr[i + 1], arr[high]);
+    return (i + 1);
+}
+
+void quickSort(vector<Resource>& arr, int low, int high){
+    if(low < high){
+        int part = partition(arr, low, high);
+        quickSort(arr, low, part - 1);
+        quickSort(arr, part + 1, high);
+    }
+}
 
 int main()
 {
@@ -151,7 +177,9 @@ int main()
         cout << "7. Undo Cancellation" << endl;
         cout << "8. View Cancellation History" << endl;
         cout << "9. Search Reservation" << endl;
-        cout << "10. Exit" << endl;
+        cout << "10. Sort Resources by Name" << endl;
+        cout << "11. Waiting-List Statistics Report" << endl;
+        cout << "12. Exit" << endl;
         cout << "Enter choice: ";
 
         cin >> choice;
@@ -396,7 +424,29 @@ int main()
                 cout << "Reservation not found." << endl;
             }
         }
-        else if (choice == 10)
+        else if(choice == 10){
+            if (resources.empty()){
+                cout << "No resources available to sort." << endl;
+            }else{
+                quickSort(resources, 0, resources.size() - 1);
+                cout << "Resources sorted by Name!" << endl;
+            }
+        }else if(choice == 11){
+            cout << "\n===== Waiting-List Statistics =====" << endl;
+            bool anyoneWaiting = false;
+
+            for(const Resource& res : resources){
+                int waitCount = waitingList.getWaitCountForResource(res.getResourceID());
+                if(waitCount > 0){
+                    cout << res.getResourceName() << " (" << res.getResourceID() << "): " << waitCount << " student(S) waiting." << endl;
+                    anyoneWaiting = true;
+                }
+            }
+            if(!anyoneWaiting){
+                cout << "No students currently in waiting list." << endl;
+            }
+        }
+        else if (choice == 12)
         {
             cout << "Exiting program." << endl;
             }
@@ -405,7 +455,7 @@ int main()
         cout << "Invalid choice. Please try again." << endl;
     }
 
-} while (choice != 10);   
+} while (choice != 12);   
 
 
 return 0;
