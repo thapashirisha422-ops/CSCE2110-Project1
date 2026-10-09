@@ -196,3 +196,57 @@ void ReservationManager::displayMostRequestedResource() const{
     cout << "Number of Requests: " << highestCount << endl;
 
 }
+
+bool ReservationManager::searchReservation(string reservationID) const
+{
+    Node* current = head;
+
+    while (current != nullptr)
+    {
+        if (current->reservation.getReservationID() == reservationID)
+        {
+            current->reservation.display();
+            return true;
+        }
+
+        current = current->next;
+    }
+    return false;
+}
+
+void ReservationManager::activeReservationReport() const
+{
+    cout << "\n===== Active Reservations Report =====" << endl;
+
+    if (head == nullptr)
+    {
+        cout << "No active reservations." << endl;
+        return;
+    }
+
+    Node* current = head;
+    int count = 0;
+
+    while (current != nullptr)
+    {
+        current->reservation.display();
+        count++;
+        current = current->next;
+    }
+    cout << "Total Active Reservations: " << count << endl;
+    }
+bool ReservationManager::hasReservationForResource(string resourceID) const
+{
+    Node* current = head;
+    //Search the linked list for another reservation
+    //associated with this resource.
+    while (current != nullptr)
+   {
+        if (current-> reservation.getResourceID() == resourceID)
+        {
+            return true;
+        }
+        current = current->next;
+    }
+    return false;
+}

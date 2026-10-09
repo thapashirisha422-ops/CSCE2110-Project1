@@ -35,5 +35,8 @@ public:
        void displayReservations() const;
        void displayResourceUtilization() const;
        void displayMostRequestedResource() const;
+       bool searchReservation(string reservationID) const;
+       bool hasReservationForResource(string resourceID) const;
+       void activeReservationReport() const;
 };
 #endif

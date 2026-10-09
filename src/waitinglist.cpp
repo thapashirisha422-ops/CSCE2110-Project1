@@ -141,3 +141,53 @@ void WaitingList::displayWaitingList() const
         current = current->next;
     }
 }
+//Finda and remove the first student waiting for a specific resource. 
+//Returns true if a matching student is found.
+bool WaitingList::getNextStudent(string resourceID, string& studentID)
+{
+    WaitNode* current = front;
+    WaitNode* previous = nullptr;
+    while (current != nullptr)
+    {
+        if (current->resourceID == resourceID)
+        {
+            studentID = current->studentID;
+            // Removing the front node
+            if (previous == nullptr)
+            {
+                front = current->next;
+            }
+            else 
+            {
+                previous->next = current->next;
+            }
+            //Update rear if the last node was removed
+            if (current == rear)
+            {    
+                rear = previous;
+            }
+            delete current;
+            return true;
+           }
+           previous = current;
+           current = current->next;
+       }
+   return false;
+}
+
+int WaitingList::getWaitCountForResource(string resID) const{
+    int count = 0;
+    WaitNode* current = front;
+
+    while (current != nullptr){
+        if (current->resourceID == resID){
+            count++;
+        }
+        current = current->next;
+    }
+    return count;
+}
+
+            
+
+            
