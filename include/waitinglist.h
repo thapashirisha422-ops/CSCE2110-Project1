@@ -7,8 +7,11 @@
 using namespace std;
 
 struct WaitNode {
+    string reservationID;
     string studentID;
+    string studentName;
     string resourceID;
+    string date;
     WaitNode* next;
 };
 
@@ -21,7 +24,9 @@ class WaitingList {
         WaitingList();
         ~WaitingList();
 
-        void addStudent(string studentID, string resourceID);
+        void addStudent(string reservationID, string studentID, string studentName, string resourceID, string date);
+        bool getNextStudentForResource(string resourceID, string& reservationID, string& studentID, string& studentName,string& date);
+        
         void removeStudent();
         void displayWaitingList() const;
         bool isEmpty() const;

@@ -1,6 +1,7 @@
 #include "ReservationManager.h"
 #include <iostream>
-
+#include <map>
+#include <string>
 using namespace std;
 
 ReservationManager::ReservationManager()
@@ -132,6 +133,68 @@ void ReservationManager::displayReservations() const
         current->reservation.display();
         current = current->next;
     }
+}
+void ReservationManager::displayResourceUtilization() const {
+    cout <<"\n===== RESOURCE UTILIZATION REPORT =====\n";
+    
+    if (head == nullptr) {
+        cout << "No active reservations found.\n";
+        return;
+    }
+    map<string, int> resourceCount;
+
+    Node* current = head;
+
+    while (current != nullptr) {
+        string resourceID = current->reservation.getResourceID();
+
+        resourceCount [resourceID]++;
+        current = current->next;
+    }
+
+    int totalReservations = 0;
+
+    for (const auto& resource : resourceCount) {
+        cout << "Resource ID: "
+             << resource.first
+             << "| Active Reservations: "
+             << resource.second
+             << endl;
+        
+        totalReservations += resource.second;
+    }
+
+    cout << "\nTotal Active Reservations: "
+         << totalReservations << endl;
+}
+void ReservationManager::displayMostRequestedResource() const{
+    cout << "\n===== MOST REQUESTED RESOURCE REPORT =====\n";
+
+    if (head == nullptr) {
+        cout << "No reservation data available.\n";
+        return;
+
+    }
+    map<string, int> resourceCount;
+    Node* current = head;
+    while (current != nullptr) {
+        string resourceID = current->reservation.getResourceID();
+        resourceCount[resourceID]++;
+        current = current->next;
+    }
+
+    string mostRequestedResource;
+    int highestCount = 0;
+
+    for (const auto& resource : resourceCount){
+        if (resource.second > highestCount) {
+            highestCount = resource.second;
+            mostRequestedResource = resource.first;
+        }
+    }
+    cout << "Resource ID: " <<mostRequestedResource << endl;
+    cout << "Number of Requests: " << highestCount << endl;
+
 }
 
 bool ReservationManager::searchReservation(string reservationID) const
