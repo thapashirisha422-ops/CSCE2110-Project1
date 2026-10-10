@@ -372,10 +372,55 @@ int main()
     {
         waitingList.displayWaitingList();
     }
-    else if (choice ==6)
+     
+        else if (choice == 6)
     {
-        waitingList.removeStudent();
+        string resourceID;
+        cout << "Enter Resource ID: ";
+        cin >> resourceID;
+        Resource* selectedResource = nullptr;
+
+        for (Resource & res : resources)
+            {
+                if (res.getResourceID() == resourceID)
+                {
+                    selectedResource = &res;
+                    break;
+                }
+            }
+
+        if (selectedResource == nullptr)
+        {
+            cout << "Invalid Resource ID." << endl;
+        }
+            else if (manager.hasReservationForResource(resourceID) ||
+                selectedResource -> getAvailabilityStatus() != "Available")
+            {
+                cout << "Resource is currently unavailable." << endl;
+            }
+                else 
+            {
+                string reservationID, studentID, studentName, date;
+              
+                if (waitingList.getNextStudentForResource(
+                    resourceID, reservationID, studentID, studentName, date))
+                {
+                    Reservation newReservation(
+                    reservationID, studentID, studentName, resourceID, date);
+
+                    manager.addReservation(newReservation);
+                    selectedResource->setAvailabilityStatus("Unavailable");
+
+                    cout << "Resource assigned to waiting student"
+                        << studentID << "." << endl;
+                }
+                    else
+                {
+                    cout << "No students waiting for this resource." << endl;
+                }
+            }
     }
+        
         else if (choice == 7)
         {
             Reservation restoredReservation;
