@@ -218,7 +218,8 @@ int main()
             cout << "Enter Reservation ID: ";
             getline(cin, reservationID);
 
-            if (manager.reservationExists(reservationID))
+            if (manager.reservationExists(reservationID) ||
+                waitingList.reservationIDExists(reservationID))
             {
                 cout << "Reservation ID already exists." << endl;
             }
