@@ -385,11 +385,13 @@ int main()
                 if (manager.reservationExists(restoredReservation.getReservationID()))
                 {
                     cout << "Reservation ID already exists." << endl;
+                    cancellationHistory.storeCancelledReservation(restoredReservation);
                 }
                 else if (manager.hasReservationForResource(
                               restoredReservation.getResourceID()))
                 {
                   cout << "Cannot restore reservation.Resource is already occupied." << endl;
+                  cancellationHistory.storeCancelledReservation(restoredReservation);
                 }
                 else 
                 {   manager.addReservation(restoredReservation);
