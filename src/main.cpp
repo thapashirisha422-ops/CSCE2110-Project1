@@ -360,6 +360,7 @@ int main()
             }
             cout << "Reservation cancelled successfully." << endl;
               }
+    }
        
     
 
@@ -392,9 +393,7 @@ int main()
                 }
                 else 
                 {   manager.addReservation(restoredReservation);
-                    cancellationHistory.removeLastCancelled();
-                 
-                      for(Resource& res : resources){
+                  for(Resource& res : resources){
                         if(res.getResourceID() == restoredReservation.getResourceID()){
                             res.setAvailabilityStatus("Unavailable");
                             break;
