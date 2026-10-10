@@ -187,6 +187,22 @@ int WaitingList::getWaitCountForResource(string resID) const{
     }
     return count;
 }
+bool WaitingList::reservationIDExists(const string& reservationID) const
+{
+    WaitNode* current = front;
+
+while (current != nullptr)
+{
+if ( current -> reservationID == reservationID)
+{
+return true;
+}
+current = current-> next;
+}
+
+return false;
+}
+
 
             
 

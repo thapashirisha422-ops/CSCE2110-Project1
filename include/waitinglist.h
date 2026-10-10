@@ -32,7 +32,7 @@ class WaitingList {
         bool isEmpty() const;
         bool getNextStudent(string resourceID, string& studentID);
         int getWaitCountForResource(string resourceID) const;
-        
+        bool reservationIDExists( const string& reservationID) const;
 };
 
 #endif
