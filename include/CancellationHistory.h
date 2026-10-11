@@ -3,7 +3,6 @@
 
 #include "Reservation.h"
 
-using namespace std;
 
 class CancellationHistory
 {
@@ -15,7 +14,7 @@ private:
 
   Node(const Reservation& r, Node* n)
       : reservation(r), next(n) {}
-);
+};
 Node* topNode;
 
 public:

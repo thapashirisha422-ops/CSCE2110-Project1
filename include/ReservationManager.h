@@ -3,6 +3,10 @@
 
 #include "Reservation.h"
 #include <string>
+#include "waitinglist.h"
+#include "Resource.h"
+#include <vector>
+
 
 using namespace std;
 
@@ -34,7 +38,7 @@ public:
        string getResourceID(string reservationID) const;
        void displayReservations() const;
        void displayResourceUtilization() const;
-       void displayMostRequestedResource() const;
+       void displayMostRequestedResource(const WaitingList& waitingList, const vector<Resource>& resources) const;
        bool searchReservation(string reservationID) const;
        bool hasReservationForResource(string resourceID) const;
        void activeReservationReport() const;

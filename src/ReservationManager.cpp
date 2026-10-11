@@ -167,20 +167,26 @@ void ReservationManager::displayResourceUtilization() const {
     cout << "\nTotal Active Reservations: "
          << totalReservations << endl;
 }
-void ReservationManager::displayMostRequestedResource() const{
-    cout << "\n===== MOST REQUESTED RESOURCE REPORT =====\n";
-
-    if (head == nullptr) {
-        cout << "No reservation data available.\n";
-        return;
-
-    }
-    map<string, int> resourceCount;
-    Node* current = head;
+void ReservationManager::displayMostRequestedResource(const WaitingList& waitingList, const vector <Resource>& resources) const   {
+     cout << "\n===== MOST REQUESTED RESOURCE REPORT =====\n";
+    
+     map<string, int> resourceCount;
+     Node* current = head;
+   
+   
     while (current != nullptr) {
         string resourceID = current->reservation.getResourceID();
         resourceCount[resourceID]++;
         current = current->next;
+    }
+
+    for (const Resource& resource : resources)
+    {
+        string resourceID = resource.getResourceID();
+        
+        resourceCount[resourceID] +=
+            waitingList.getWaitCountForResource(resourceID);
+
     }
 
     string mostRequestedResource;
@@ -192,6 +198,12 @@ void ReservationManager::displayMostRequestedResource() const{
             mostRequestedResource = resource.first;
         }
     }
+    if (highestCount == 0)
+    {
+        cout << "No reservation data available. \n";
+        return;
+    }
+        
     cout << "Resource ID: " <<mostRequestedResource << endl;
     cout << "Number of Requests: " << highestCount << endl;
 

@@ -459,7 +459,7 @@ int main()
     }
     else if (choice == 10)
     {
-        manager.displayMostRequestedResource(waitingList, resources););
+        manager.displayMostRequestedResource(waitingList, resources);
     }
     
             else if (choice == 11)
