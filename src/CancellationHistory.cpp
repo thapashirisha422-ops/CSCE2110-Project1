@@ -3,32 +3,50 @@
 
 using namespace std;
 
+CancellationHistory::CancellationHistory()
+{
+  topNode = nullptr;
+}
+CancellationHistory::~CancellationHistory()
+{
+  while (topNode != nullptr)
+ {
+    Node* temp = topNode;
+    topNode = topNode->next;
+    delete temp;
+ }
+}
+    
 void CancellationHistory::storeCancelledReservation (Reservation reservation)
 {
-  cancelledReservations.push(reservation);
+ topNode = new Node(reservation, topNode);
 }
 bool CancellationHistory::restoreLastCancelled(Reservation& reservation)
 {
-  if (cancelledReservations.empty())
-{
-  return false;
-}
-reservation = cancelledReservations.top();
-cancelledReservations.pop();
+  if (topNode == nullptr)
+  {
+    return false;
+  }
+  reservation = topNode->reservation;
+  Node* temp = topNode;
+  topNode = topNode->next;
+  delete temp;
 
-return true;
+  return true;
 }
+
 void CancellationHistory::displayCancellationHistory() const
 {
-  if (cancelledReservations.empty())
-{
+  if (topNode == nullptr)
+  {
     cout << "No cancellation history." << endl;
     return;
   }
- stack<Reservation> temp = cancelledReservations;
- while (!temp.empty())
-  {  
-    temp.top().display();
-    temp.pop();
-}
+  Node* current = topNode;
+
+  while (current != nullptr)
+  {
+    current->reservation.display();
+    current = current->next;
+  }
 } 
