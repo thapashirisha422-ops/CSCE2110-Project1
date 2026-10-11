@@ -5,7 +5,7 @@ Campus Resource Reservation System-Project 1
 CSCE 2110 - Project 1
 
 ## Description
-This project is a Campus Resource Reservation
+The Campus Resource ReservationSystem is a C++ console-based application developed for CSCE 2110 Project 1. It allows the users to manage campus resources and student reservations. 
 
 The system allows users to:
 -View resource
@@ -15,7 +15,7 @@ The system allows users to:
 -Manage waiting lists
 -Undo Cancellation
 -Generate reports
-Sort and search system data
+-Sort and search system data
 
 
 ## Project Structure
@@ -32,6 +32,7 @@ g++ -std=c++17 -Iinclude src/*.cpp -o project1
 
 ## Run Instructions
 ./project1
+
 ## GitHub Repository
 https://github.com/thapashirisha422-ops/CSCE2110-Project1
 
