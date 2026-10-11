@@ -28,10 +28,10 @@ Sort and search system data
 The project uses header files stored inside the 'include' directory.
 
 Compile using:
-'''bash
 g++ -std=c++17 -Iinclude src/*.cpp -o project1
 
 ## Run Instructions
-'''bash
 ./project1
+## GitHub Repository
+https://github.com/thapashirisha422-ops/CSCE2110-Project1
 
