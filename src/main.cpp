@@ -314,8 +314,7 @@ int main()
                 cancellationHistory.storeCancelledReservation( cancelledReservation);
         
                 string resourceID = cancelledReservation.getResourceID();
-                if (!manager.hasReservationForResource(resourceID))
-                {
+                
                   string waitingReservationID;
                   string waitingStudentID;
                   string waitingStudentName;
@@ -345,7 +344,7 @@ int main()
                       << "." << endl;
                     
                   }
-                }
+                
                   for (Resource& res : resources)
                   {
                     if (res.getResourceID() == resourceID)
@@ -393,14 +392,7 @@ int main()
         if (selectedResource == nullptr)
         {
             cout << "Invalid Resource ID." << endl;
-        }
-            else if (manager.hasReservationForResource(resourceID) ||
-                selectedResource -> getAvailabilityStatus() != "Available")
-            {
-                cout << "Resource is currently unavailable." << endl;
-            }
-                else 
-            {
+        } else {
                 string reservationID, studentID, studentName, date;
               
                 if (waitingList.getNextStudentForResource(
