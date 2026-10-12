@@ -33,6 +33,9 @@ g++ -std=c++17 -Iinclude src/*.cpp -o project1
 ## Run Instructions
 ./project1
 
+## Error Handling
+The program checks invalid menu selections, duplicate reservation IDs, invalid resource IDs, and invalid dates. It also handles waiting lists and cancellation history.
+
 ## GitHub Repository
 https://github.com/thapashirisha422-ops/CSCE2110-Project1
 
