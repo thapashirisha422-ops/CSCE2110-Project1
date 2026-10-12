@@ -455,7 +455,7 @@ int main()
         else if (choice == 9)
         {
 
-           manager.displayResourceUtilization();
+           manager.displayResourceUtilization(resources);
     }
     else if (choice == 10)
     {

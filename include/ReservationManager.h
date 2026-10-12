@@ -37,7 +37,7 @@ public:
        bool getReservation( string ReservationID, Reservation&reservation) const;
        string getResourceID(string reservationID) const;
        void displayReservations() const;
-       void displayResourceUtilization() const;
+       void displayResourceUtilization(const vector<Resource>&resources) const;
        void displayMostRequestedResource(const WaitingList& waitingList, const vector<Resource>& resources) const;
        bool searchReservation(string reservationID) const;
        bool hasReservationForResource(string resourceID) const;
