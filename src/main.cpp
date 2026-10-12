@@ -485,18 +485,13 @@ int main()
             }
         }else if(choice == 13){
             cout << "\n===== Waiting-List Statistics =====" << endl;
-            bool anyoneWaiting = false;
 
             for(const Resource& res : resources){
                 int waitCount = waitingList.getWaitCountForResource(res.getResourceID());
-                if(waitCount > 0){
-                    cout << res.getResourceName() << " (" << res.getResourceID() << "): " << waitCount << " student(S) waiting." << endl;
-                    anyoneWaiting = true;
-                }
+               
+                cout << res.getResourceName() << " (" << res.getResourceID() << "): " << waitCount << " student(S) waiting." << endl;   
             }
-            if(!anyoneWaiting){
-                cout << "No students currently in waiting list." << endl;
-            }
+            
         }
         else if (choice == 14)
         {
