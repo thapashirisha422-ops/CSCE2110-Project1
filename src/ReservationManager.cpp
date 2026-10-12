@@ -134,13 +134,9 @@ void ReservationManager::displayReservations() const
         current = current->next;
     }
 }
-void ReservationManager::displayResourceUtilization() const {
+void ReservationManager::displayResourceUtilization(const vector<Resource>&resources) const {
     cout <<"\n===== RESOURCE UTILIZATION REPORT =====\n";
-    
-    if (head == nullptr) {
-        cout << "No active reservations found.\n";
-        return;
-    }
+
     map<string, int> resourceCount;
 
     Node* current = head;
@@ -154,15 +150,15 @@ void ReservationManager::displayResourceUtilization() const {
 
     int totalReservations = 0;
 
-    for (const auto& resource : resourceCount) {
-        cout << "Resource ID: "
-             << resource.first
-             << "| Active Reservations: "
-             << resource.second
-             << endl;
-        
-        totalReservations += resource.second;
-    }
+   for ( const Resource& resource : resources){
+    string resourceID = resource.getResourceID();
+    int count = resourceCount[resourceID];
+
+    cout << "Resource ID: " << resourceID
+         <<" | Active Reservations: " << count << endl;
+
+         totalReservations += count;
+   }
 
     cout << "\nTotal Active Reservations: "
          << totalReservations << endl;
